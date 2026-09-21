@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpendWise</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Spend<span>Wise</span></div>
+
+    <div class="header-actions">
+        <button class="settings-btn" onclick="openSettings()">⚙️</button>
+        <button class="theme-btn" onclick="toggleTheme()">🌙</button>
+    </div>
+</header>
+
+<main>
+
+    <section class="hero">
+        <div>
+            <p class="small-title">PERSONAL FINANCE</p>
+            <h1>Manage your money smarter.</h1>
+            <p>Track your spending, income and budget in one place.</p>
+        </div>
+
+        <button class="primary-btn" onclick="openModal()">
+            + Add Transaction
+        </button>
+    </section>
+
+
+    <!-- SUMMARY -->
+
+    <section class="cards">
+
+        <div class="card">
+            <p>Total Balance</p>
+            <h2 id="balance">₹0.00</h2>
+        </div>
+
+        <div class="card">
+            <p>Total Income</p>
+            <h2 id="income" class="income">₹0.00</h2>
+        </div>
+
+        <div class="card">
+            <p>Total Expenses</p>
+            <h2 id="expense" class="expense">₹0.00</h2>
+        </div>
+
+    </section>
+
+
+    <!-- BUDGET -->
+
+    <section class="budget-card">
+
+        <div class="budget-top">
+            <div>
+                <p>Monthly Budget</p>
+                <h2 id="budgetAmount">₹0.00</h2>
+            </div>
+
+            <button onclick="openBudget()">Set Budget</button>
+        </div>
+
+        <div class="progress-background">
+            <div id="budgetProgress"></div>
+        </div>
+
+        <div class="budget-info">
+            <span id="budgetSpent">₹0 spent</span>
+            <span id="budgetRemaining">₹0 remaining</span>
+        </div>
+
+        <p id="budgetMessage"></p>
+
+    </section>
+
+
+    <!-- TRANSACTIONS -->
+
+    <section class="transactions-section">
+
+        <div class="section-header">
+
+            <div>
+                <h2>Transactions</h2>
+                <p class="muted">Your recent income and expenses</p>
+            </div>
+
+            <div class="filters">
+
+                <select id="filter" onchange="displayTransactions()">
+                    <option value="all">All</option>
+                    <option value="income">Income</option>
+                    <option value="expense">Expenses</option>
+                </select>
+
+                <input
+                    type="text"
+                    id="search"
+                    placeholder="Search..."
+                    oninput="displayTransactions()"
+                >
+
+            </div>
+
+        </div>
+
+        <div id="transactionsList"></div>
+
+    </section>
+
+</main>
+
+
+<!-- TRANSACTION MODAL -->
+
+<div class="modal" id="transactionModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2 id="modalTitle">Add Transaction</h2>
+            <button onclick="closeModal()">×</button>
+        </div>
+
+        <form id="transactionForm">
+
+            <label>Type</label>
+
+            <div class="type-buttons">
+
+                <button
+                    type="button"
+                    id="expenseType"
+                    class="type active"
+                    onclick="selectType('expense')">
+                    Expense
+                </button>
+
+                <button
+                    type="button"
+                    id="incomeType"
+                    class="type"
+                    onclick="selectType('income')">
+                    Income
+                </button>
+
+            </div>
+
+
+            <label>Amount</label>
+
+            <input
+                type="number"
+                id="amount"
+                placeholder="Enter amount"
+                min="0"
+                step="0.01"
+                required
+            >
+
+
+            <label>Category</label>
+
+            <select id="category" required></select>
+
+
+            <label>Date</label>
+
+            <input type="date" id="date" required>
+
+
+            <label>Description</label>
+
+            <input
+                type="text"
+                id="description"
+                placeholder="Example: Lunch"
+            >
+
+
+            <button class="submit-btn" type="submit">
+                Save Transaction
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- BUDGET MODAL -->
+
+<div class="modal" id="budgetModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2>Set Monthly Budget</h2>
+            <button onclick="closeBudget()">×</button>
+        </div>
+
+        <label>Budget Amount</label>
+
+        <input
+            type="number"
+            id="budgetInput"
+            placeholder="Example: 15000"
+            min="0"
+        >
+
+        <button class="submit-btn" onclick="saveBudget()">
+            Save Budget
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- SETTINGS MODAL -->
+
+<div class="modal" id="settingsModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2>Customize Categories</h2>
+            <button onclick="closeSettings()">×</button>
+        </div>
+
+
+        <p class="muted">
+            Create categories that match your lifestyle.
+        </p>
+
+
+        <div class="category-create">
+
+            <input
+                type="text"
+                id="newCategory"
+                placeholder="Example: Gym"
+            >
+
+            <button onclick="addCategory()">
+                Add
+            </button>
+
+        </div>
+
+
+        <div id="categoryList"></div>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
